@@ -2,14 +2,16 @@
 The pytorch implementation of clustering algorithms (k-mean, mean-shift). These algorithms support running on several GPUs.
 
 ## K-Means
-Speed test on GTX 1060 and Inter(R) Core(TM)i5-7400 CPU @ 3.00 GHz.  
+Speed test on GTX 1060 (6G) and Inter(R) Core(TM)i5-7400 CPU @ 3.00 GHz.  
+
+data format (samples, dimension, cluster_centers), 10 iteration are used in the following test.
 
 | Device | save_memory | （10000, 2, 100) | (10000, 2, 1000) | (100000, 2, 100) | (100000, 2, 1000) | (20000, 200, 400) |
 | ------ | ----------- | ---------------- | ---------------- | ---------------- | ----------------- | ----------------- |
 | CPU    | True        | 3.2s             | 9.9s             | 59.0s            | 80.9s             | 29.2s             |
-| GPU    | True        | 26.3s            | 18.2s            | 159.3s           |                   |                   |
-| CPU    | False       |                  |                  |                  |                   |                   |
-| GPU    | True        |                  |                  |                  |                   |                   |
+| GPU    | True        | 26.3s            | 18.2s            | 159.3s           | 168.7s            | 31.5s             |
+| CPU    | False       | 0.2s             | 2.0s             | 1.6s             | 14.6s             | 25.0s             |
+| GPU    | False       | 0.3s             | 1.9s             | 0.3s             | 2.1s              | OOM               |
 
 The simple usages of K-means algorithms.
 ```python
