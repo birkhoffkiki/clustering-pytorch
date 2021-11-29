@@ -65,3 +65,30 @@ class Similarity:
     @staticmethod
     def __cosine(x, y, dim):
         return torch.cosine_similarity(x, y, dim=dim)
+
+
+class Distance:
+    supported_distance = ['euclidean', 'cosine']
+
+    def __init__(self, distance):
+        if distance not in self.supported_distance:
+            raise NotImplementedError('The distance `{}` is not supported yet, please implement it manually ...'.format(
+                distance
+            ))
+        self.distance = {
+            'euclidean': self.__euclidean,
+            'cosine': self.__cosine
+        }[distance]
+
+    def __call__(self, x, y, dim):
+        return self.distance(x, y, dim)
+
+    @staticmethod
+    def __euclidean(x, y, dim):
+        x = x.sub(y)
+        return torch.sqrt(x.square_().sum(dim))
+
+    @staticmethod
+    def __cosine(x, y, dim):
+        return torch.cosine_similarity(x, y, dim=dim)
+
